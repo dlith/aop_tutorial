@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyLoginAspect {
 
-    @Before("execution(public void addAccount())")
+    //@Before("execution(public void addAccount())")
+    //@Before("execution(public void com.dzmitry.aopdemo.dao.AccountDAO.addAccount())")
+    //@Before("execution(public void add*())")
+    @Before("execution(* add*())")
     public void beforeAddAccountAdvice(){
         System.out.println("beforeAddAccountAdvice");
     }
