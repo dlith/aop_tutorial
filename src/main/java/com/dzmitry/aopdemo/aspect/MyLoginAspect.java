@@ -1,8 +1,11 @@
 package com.dzmitry.aopdemo.aspect;
 
+import com.dzmitry.aopdemo.Account;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +23,22 @@ public class MyLoginAspect {
     //@Before("execution(* add*(..))")
     //@Before("execution(* com.dzmitry.aopdemo.dao.*.*(..))")
     @Before("AopExpressions.forDaoPackageNotGetterSetter()")
-    public void beforeAddAccountAdvice(){
+    public void beforeAddAccountAdvice(JoinPoint joinPoint){
         System.out.println("beforeAddAccountAdvice");
+
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+
+        Object[] args = joinPoint.getArgs();
+        for(Object arg: args){
+            System.out.println("Arg value: " + arg);
+            if(arg instanceof Account){
+                Account account = (Account) arg;
+                System.out.println("Name: " + account.getName());
+                System.out.println("ServiceLevel: " + account.getLevel());
+            }
+        }
+
+        System.out.println("methodSignature: " + methodSignature);
     }
 
     /*@Before("forDaoPackageNotGetterSetter()")
