@@ -14,4 +14,7 @@ public class AopExpressions {
     public void forGetter(){}
     @Pointcut("forDaoPackage() && !(forGetter() || forSetter())")
     public void forDaoPackageNotGetterSetter(){}
+
+    @Pointcut("execution(* findAccounts())")
+    public void forFindAccount(){}
 }

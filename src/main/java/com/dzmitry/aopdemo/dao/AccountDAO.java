@@ -5,17 +5,25 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class AccountDAO {
 
     private String name;
     private String serviceCode;
+    private List<Account> accounts;
 
     public void addAccount() {
         System.out.println(getClass() + ": Doing by mb work: adding an account");
     }
 
     public void addAccount(Account account){
+        if(accounts == null){
+            accounts = new ArrayList<>();
+        }
+        accounts.add(account);
         System.out.println(getClass() + ": " + account);
     }
 
@@ -25,6 +33,10 @@ public class AccountDAO {
 
     public void doWork(){
         System.out.println(getClass() + ": Doing work");
+    }
+
+    public List<Account> findAccounts(){
+        return accounts;
     }
 
     public String getName() {

@@ -2,12 +2,16 @@ package com.dzmitry.aopdemo.aspect;
 
 import com.dzmitry.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Aspect
 @Component
@@ -41,14 +45,23 @@ public class MyLoginAspect {
         System.out.println("methodSignature: " + methodSignature);
     }
 
-    /*@Before("forDaoPackageNotGetterSetter()")
-    public void performApiAnalytics(){
-        System.out.println("performApiAnalytics");
-    }
+    @AfterReturning(pointcut = "AopExpressions.forFindAccount()", returning = "result")
+    public void afterReturningFindAccountAdvice(JoinPoint joinPoint, List<Account> result){
 
-    @Before("forDaoPackageNotGetterSetter()")
-    public void logToCloudAsync(){
-        System.out.println("logToCloudAsync");
-    }*/
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        System.out.println("afterReturningFindAccountAdvice");
+        System.out.println("methodSignature: " + methodSignature);
+
+        System.out.println("Size:" + result.size());
+
+        for(Account account: result){
+            System.out.println(account);
+        }
+
+        if(!result.isEmpty()){
+            result.get(0).setName("New name from after returning");
+        }
+
+    }
 
 }
