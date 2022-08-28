@@ -86,7 +86,7 @@ public class MyLoginAspect {
             result = proceedingJoinPoint.proceed();
         }catch (Exception e){
             logger.warning("Around advice: We have a problem " + e);
-            result = "Nothing exciting here. Leave along!";
+            throw e;
         }
 
         long end = System.currentTimeMillis();
