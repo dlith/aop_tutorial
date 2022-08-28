@@ -3,10 +3,7 @@ package com.dzmitry.aopdemo.aspect;
 import com.dzmitry.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -62,6 +59,12 @@ public class MyLoginAspect {
             result.get(0).setName("New name from after returning");
         }
 
+    }
+
+    @AfterThrowing(pointcut = "execution(* com.dzmitry.aopdemo.dao.AccountDAO.getAccess(..))", throwing = "error")
+    public void afterThrowingDividingAdvice(JoinPoint joinPoint, Throwable error){
+        System.out.println("afterThrowingDividingAdvice on method: " + joinPoint.getSignature().toShortString());
+        System.out.println("The exception is: " + error);
     }
 
 }

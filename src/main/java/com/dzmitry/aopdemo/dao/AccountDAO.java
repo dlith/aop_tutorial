@@ -39,6 +39,13 @@ public class AccountDAO {
         return accounts;
     }
 
+    public String getAccess(boolean isFreeAccess){
+        if (!isFreeAccess){
+            throw new RuntimeException("You do not have access");
+        }
+        return "Access allowed";
+    }
+
     public String getName() {
         System.out.println(getClass() + ": getName");
         return name;
