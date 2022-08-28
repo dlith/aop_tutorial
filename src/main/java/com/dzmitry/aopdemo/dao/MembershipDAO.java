@@ -13,4 +13,15 @@ public class MembershipDAO {
     public void goToSleep(){
         System.out.println(getClass() + ": i am going to sleep");
     }
+
+    public String getFortune() {
+        System.out.println(getClass() + ": You have a fortune!");
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+        return "You have a fortune!!!";
+    }
 }

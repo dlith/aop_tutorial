@@ -9,11 +9,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Aspect
 @Component
 @Order(30)
 public class MyLoginAspect {
+
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     //@Before("execution(public void addAccount())")
     //@Before("execution(public void com.dzmitry.aopdemo.dao.AccountDAO.addAccount())")
@@ -70,6 +73,22 @@ public class MyLoginAspect {
     @After("execution(* com.dzmitry.aopdemo.dao.AccountDAO.getAccess(..))")
     public void afterGetAccessAdvice(JoinPoint joinPoint){
         System.out.println("afterGetAccessAdvice: " + joinPoint.getSignature().toShortString());
+    }
+
+    @Around("execution(* com.dzmitry.aopdemo.dao.MembershipDAO.getFortune(..))")
+    public Object aroundGetFortuneAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+
+        logger.info("Executing aroundGetFortuneAdvice: " + proceedingJoinPoint.getSignature().toShortString());
+
+        long start = System.currentTimeMillis();
+
+        Object result = proceedingJoinPoint.proceed();
+
+        long end = System.currentTimeMillis();
+
+        logger.info("Time of work: " + (end-start));
+
+        return result;
     }
 
 
