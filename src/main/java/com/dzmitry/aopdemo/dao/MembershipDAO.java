@@ -24,4 +24,20 @@ public class MembershipDAO {
 
         return "You have a fortune!!!";
     }
+
+    public String getFortune(boolean isFortune) {
+
+        if (!isFortune){
+            throw new RuntimeException("Major accident! HighWay is closed!");
+        }
+
+        System.out.println(getClass() + ": You have a fortune!");
+        try{
+            Thread.sleep(500);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+        return getFortune();
+    }
 }

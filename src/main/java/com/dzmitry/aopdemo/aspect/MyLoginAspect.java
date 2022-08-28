@@ -81,8 +81,13 @@ public class MyLoginAspect {
         logger.info("Executing aroundGetFortuneAdvice: " + proceedingJoinPoint.getSignature().toShortString());
 
         long start = System.currentTimeMillis();
-
-        Object result = proceedingJoinPoint.proceed();
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+        }catch (Exception e){
+            logger.warning("Around advice: We have a problem " + e);
+            result = "Nothing exciting here. Leave along!";
+        }
 
         long end = System.currentTimeMillis();
 
