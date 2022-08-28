@@ -62,9 +62,15 @@ public class MyLoginAspect {
     }
 
     @AfterThrowing(pointcut = "execution(* com.dzmitry.aopdemo.dao.AccountDAO.getAccess(..))", throwing = "error")
-    public void afterThrowingDividingAdvice(JoinPoint joinPoint, Throwable error){
-        System.out.println("afterThrowingDividingAdvice on method: " + joinPoint.getSignature().toShortString());
+    public void afterThrowingGetAccessAdvice(JoinPoint joinPoint, Throwable error){
+        System.out.println("afterThrowingGetAccessAdvice on method: " + joinPoint.getSignature().toShortString());
         System.out.println("The exception is: " + error);
     }
+
+    @After("execution(* com.dzmitry.aopdemo.dao.AccountDAO.getAccess(..))")
+    public void afterGetAccessAdvice(JoinPoint joinPoint){
+        System.out.println("afterGetAccessAdvice: " + joinPoint.getSignature().toShortString());
+    }
+
 
 }
